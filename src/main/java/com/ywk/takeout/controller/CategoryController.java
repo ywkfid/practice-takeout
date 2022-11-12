@@ -25,7 +25,7 @@ public class CategoryController {
      */
     @PostMapping
     public R<String> save(@RequestBody Category category) {
-        log.info("category:{}", category);
+        log.info("新增分类:category:{}", category);
         categoryService.save(category);
         return R.success("新增分类成功");
     }
@@ -38,18 +38,8 @@ public class CategoryController {
      */
     @GetMapping("/page")
     public R<Page> page(int page, int pageSize) {
-        log.info("page = {}, pageSize = {}", page, pageSize);
-
-        //分页构造器
-        Page pageInfo = new Page(page, pageSize);
-        //条件构造器
-        LambdaQueryWrapper<Category> queryWrapper = new LambdaQueryWrapper();
-
-        queryWrapper.orderByAsc(Category::getSort);
-        //分页搜索
-        categoryService.page(pageInfo, queryWrapper);
-
-        return R.success(pageInfo);
+        log.info("分类信息:page = {}, pageSize = {}", page, pageSize);
+        return categoryService.page(page, pageSize);
     }
 
     /**
@@ -72,7 +62,6 @@ public class CategoryController {
     @PutMapping
     public R<String> update(@RequestBody Category category) {
         log.info("修改分类信息:{}", category);
-
         categoryService.updateById(category);
         return R.success("修改分类信息成功");
     }

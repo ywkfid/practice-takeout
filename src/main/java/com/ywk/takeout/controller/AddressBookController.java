@@ -21,10 +21,15 @@ public class AddressBookController {
     @Autowired
     private AddressBookService addressBookService;
 
+    /**
+     * 更新地址
+     * @param addressBook
+     * @return
+     */
     @PutMapping
     public R<AddressBook> update(@RequestBody AddressBook addressBook){
+        log.info("更新地址:{}", addressBook.toString());
         addressBook.setUserId(BaseContext.getCurrentId());
-        log.info("address:{}",addressBook);
         addressBookService.updateById(addressBook);
         return R.success(addressBook);
     }
@@ -89,21 +94,33 @@ public class AddressBookController {
         LambdaQueryWrapper<AddressBook> queryWrapper=new LambdaQueryWrapper<>();
         queryWrapper.eq(addressBook.getUserId()!=null,AddressBook::getUserId,addressBook.getUserId());
         queryWrapper.orderByDesc(AddressBook::getUpdateTime);
-
         return R.success(addressBookService.list(queryWrapper));
     }
 
+    /**
+     * 修改地址时回显数据
+     * @param id
+     * @return
+     */
     @GetMapping("/{id}")
     public R<AddressBook> get(@PathVariable Long id){
+        log.info("修改地址需回显数据:{}", id);
         AddressBook addressBook = addressBookService.getById(id);
-        if(addressBook!=null)
+        if(addressBook != null) {
             return R.success(addressBook);
+        }
         return R.error("没有找到对象");
 
     }
 
+    /**
+     * 删除地址
+     * @param ids
+     * @return
+     */
     @DeleteMapping
     public R<String> delete(Long ids){
+        log.info("删除地址:{}", ids);
         addressBookService.removeById(ids);
         return R.success("删除成功");
     }

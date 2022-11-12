@@ -2,7 +2,10 @@ package com.ywk.takeout.entity;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.ywk.takeout.common.R;
 import lombok.Data;
+
+import javax.servlet.http.HttpServletRequest;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 

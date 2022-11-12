@@ -14,6 +14,11 @@ import java.sql.SQLIntegrityConstraintViolationException;
 @ResponseBody
 @Slf4j
 public class GlobalExceptionHandler {
+    /**
+     * 主键重复异常
+     * @param ex
+     * @return
+     */
     //判断是否有一样的id
     @ExceptionHandler(SQLIntegrityConstraintViolationException.class)
     public R<String> exceptionHandler(SQLIntegrityConstraintViolationException ex) {
@@ -26,10 +31,15 @@ public class GlobalExceptionHandler {
         }
         return R.error("未知错误");
     }
+
+    /**
+     * 客户异常
+     * @param ex
+     * @return
+     */
     @ExceptionHandler(CustomException.class)
     public R<String> exceptionHandler(CustomException ex) {
         log.error(ex.getMessage());
-
         return R.error(ex.getMessage());
     }
 }
